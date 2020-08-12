@@ -6,6 +6,6 @@ module.exports={
         const serversEmbed = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle("**Partnered servers**")
-        .addField("[Adrieliu's Art and Animation Server](https://discord.gg/pRvmqGy)")
+        .addField("Partner 1:","[Adrieliu's Art and Animation Server](https://discord.gg/pRvmqGy)")
      message.channel.send(serversEmbed)
 }}
