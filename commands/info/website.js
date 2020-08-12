@@ -9,7 +9,6 @@ module.exports={
         .setDescription("Website information for FishBot")
         .addField("Twitter", "[FishBot\'s Twitter](https://twitter.com/FishBotOff)")
         .addField("Server", "[FishBot\'s Official Discord server](https://discord.gg/DkHkP7p)")
-        .addField("Partnered Servers", "[Servers that are partnered with us](https://discord.gg/pRvmqGy)")
      message.channel.send(websiteEmbed)
 }}
            
