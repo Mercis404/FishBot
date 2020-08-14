@@ -28,7 +28,7 @@ module.exports={
         .addField("User Information", stripIndents`\n**ID:** ${member.user.id}
         \n**Username:** ${member.user.username}
         \n**Discord Tag** ${member.user.tag}
-        \n**Registered On:** ${created}`, true)
+        \n**Registered On:** ${user.createdAt}`, true)
 
         .addField("Server Information", stripIndents`\n**Display Name:** ${member.displayName}
         \n**Joined At:** ${joined}
