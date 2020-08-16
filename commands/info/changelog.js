@@ -7,9 +7,9 @@ module.exports={
         .setTitle('Changes for V.1.0.1')
         .setColor('RANDOM')
         .addFields (
-            { name: '**Removed:**', value:'pimpchimp,coldcoffee,helps,pop and channel stats', inline: false },
-            { name: '**Added:**', value: 'Covid-19 stats,8Ball,a new warning system,changelog,whois,avatar, partner and help.', inline: false},
-            { name: '**Changes:**', value: 'ping,website,whenwasimade,kick,mute,and clear now have their own embed and should run more smoothly. The version command was changed to Info.', inline: false },
+            { name: '**ReAdded:**', value:'channel stats(only works in the Hangout Room server)', inline: false },
+            { name: '**Added:**', value: 'trivia, bread and more secret commands', inline: false},
+            { name: '**Changes:**', value: 'Version command has been changed to Info, whois registered on featured now displays proper information and is more specific', inline: false },
         )
         return message.channel.send(changesEmbed)
     }}
