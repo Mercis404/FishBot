@@ -9,7 +9,7 @@ module.exports={
         .addFields (
             { name: '**ReAdded:**', value:'channel stats(only works in the Hangout Room server)', inline: false },
             { name: '**Added:**', value: 'trivia, bread and more secret commands', inline: false},
-            { name: '**Changes:**', value: 'Version command has been changed to Info, whois registered on featured now displays proper information and is more specific', inline: false },
+            { name: '**Changes:**', value: 'Info command has been changed to Version, whois registered on featured now displays proper information and is more specific', inline: false },
         )
         return message.channel.send(changesEmbed)
     }}
