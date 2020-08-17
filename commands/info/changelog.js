@@ -4,7 +4,7 @@ module.exports={
     category: 'info',
     run: async(bot,message,args)=>{
         const changesEmbed = new MessageEmbed()
-        .setTitle('Changes for V.1.0.1')
+        .setTitle('Changes for V.1.1.1')
         .setColor('RANDOM')
         .addFields (
             { name: '**ReAdded:**', value:'channel stats(only works in the Hangout Room server)', inline: false },
