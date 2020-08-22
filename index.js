@@ -49,8 +49,11 @@ bot.on("guildMemberRemove", member =>{
 })
 bot.on("ready", async message => {
     console.log(`${bot.user.username} is now online`);
-    await bot.user.setPresence({ game: { name: 'name' }, status: 'dnd' });
-    bot.user.setActivity("!help for commands", {type: "PLAYING"})
+    await bot.user.setActivity("!help for commands | 9/27/2020-6:30 P.M EST", {
+        type: 'STREAMING',
+        url: 'https://www.twitch.tv/Mercisffnf'
+    })
+      
 })
 bot.on('message', async message =>{
     if(message.content.startsWith(`${prefix}reactionrole`)) {
