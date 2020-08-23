@@ -57,6 +57,7 @@ bot.on("ready", async message => {
 })
 bot.on('message', async message =>{
     if(message.content.startsWith(`${prefix}reactionrole`)) {
+if (message.guild.id !== '739620038125813814')
         const msg = await message.channel.send("React with '✅' if you agree with our rules in #rules. React with '🎉' if you wish to become a Event Participant for our events. Read more in #event-info")
         msg.react('✅').then(msg.react('🎉'))
         message.delete()
