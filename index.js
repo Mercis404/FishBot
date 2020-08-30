@@ -7,7 +7,6 @@ const prefix = config.prefix;
 const Canvas = require('canvas')
 const Canvacord = require("canvacord")
 const db = require('quick.db')
-const Canvas0 = new Canvacord()
 const bot = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 bot.prefix = prefix;
 bot.commands = new Discord.Collection();
@@ -20,7 +19,7 @@ require('http').createServer((req, res) => res.end('Bot is alive!')).listen(3000
 bot.on('message', async message => {
     if(message.author.bot) return
     xp(message)
-    if(message.content.startsWith(`${PREFIX}rank`)){
+    if(message.content.startsWith(`${process.env.PREFIX}rank`)){
         var user = message.mentions.users.first() || message.author
         var level = db.get(`guild_${message.guild.id}_level_${user.id}`) || 0
         level = level.toString()
@@ -32,7 +31,7 @@ bot.on('message', async message => {
         .sort((a, b) => b.data - a.data)
         var rank = every.map(x => x.ID).indexOf(`guild_${message.guild.id}_xptotal_${user.id}`) + 1
         rank = rank.toString()
-        var image = await canvas0.rank({
+        var image = await canvas.rank({
             username: user.username,
             discrim: user.discriminator,
             status: user.presence.status,
@@ -47,7 +46,7 @@ bot.on('message', async message => {
     }
 })
 function xp(message) {
-    if(message.content.startsWith(PREFIX)) return
+    if(message.content.startsWith(process.env.PREFIX)) return
     const randomNumber = Math.floor(Math.random() *10) + 15
     db.add(`guild_${message.guild.id}_xp_${message.author.id}`, randomNumber)
     db.add(`guild_${message.guild.id}_xptotal_${message.guild.id}`, randomNumber)
