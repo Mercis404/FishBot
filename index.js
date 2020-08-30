@@ -5,8 +5,7 @@ const config = require(`./config.json`);
 const message = require("./events/guild/message");
 const prefix = config.prefix;
 const Canvas = require('canvas')
-const Canvacord = require("canvacord")
-const db = require('quick.db')
+var db = require('quick.db');
 const bot = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 bot.prefix = prefix;
 bot.commands = new Discord.Collection();
@@ -31,7 +30,7 @@ bot.on('message', async message => {
         .sort((a, b) => b.data - a.data)
         var rank = every.map(x => x.ID).indexOf(`guild_${message.guild.id}_xptotal_${user.id}`) + 1
         rank = rank.toString()
-        var image = await canvas.rank({
+        let img = await Canvacord.rank({
             username: user.username,
             discrim: user.discriminator,
             status: user.presence.status,
