@@ -37,7 +37,7 @@ bot.on('ready', () => {
   const channelCountChannel = guild.channels.cache.get('744750270000660531')
   const channelCount = guild.channels.cache.size
   channelCountChannel.setName(`Channels: ${channelCount}`)
-}, 300000)
+}, 300000),
 bot.on('guildMemberAdd', member => {
   member.send(`Welcome to the server! Please read the rules.`)
 })
