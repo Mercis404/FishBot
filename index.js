@@ -44,13 +44,15 @@ bot.on('guildMemberAdd', member => {
 // Pass the entire Canvas object because you'll need to access its width, as well its context
 const applyText = (canvas, text) => {
 	const ctx = canvas.getContext('2d');
-
+const { registerFont } = require('canvas');
+registerFont('Open_Sans/OpenSans-SemiBold.ttf', { family: 'Open_Sans' });
 	// Declare a base size of the font
+  ctx.font = '30px Open_Sans';
 	let fontSize = 70;
 
 	do {
 		// Assign the font to the context and decrement it so it can be measured again
-		ctx.font = `${fontSize -= 10}px sans-serif`;
+		ctx.font = `${fontSize -= 10}px Open_Sans`;
 		// Compare pixel width of the text to the canvas minus the approximate avatar size
 	} while (ctx.measureText(text).width > canvas.width - 300);
 
@@ -71,7 +73,9 @@ bot.on('guildMemberAdd', async member => {
 	ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
 	// Slightly smaller text placed above the member's display name
-	ctx.font = '28px sans-serif';
+  const { registerFont } = require('canvas');
+registerFont('Open_Sans/OpenSans-SemiBold.ttf', { family: 'Open_Sans' });
+	ctx.font = '28px Open_Sans';
 	ctx.fillStyle = '#ffffff';
 	ctx.fillText('Welcome to the server,', canvas.width / 2.5, canvas.height / 3.5);
 
