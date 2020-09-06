@@ -1,57 +1,57 @@
-const Discord = require('discord.js')
+const { MessageAttachment } = require("discord.js");
+const Canvacord = require("canvacord");
 const db = require('quick.db')
-const Canvacord = require('canvacord')
-const ms = require('ms')
-const prefix = '!'
-module.exports={
-    name: 'rank',
-    category: 'info',
-   run: async (bot,message,args ) =>{
-    if (message.author.bot) return
-    xp(message)
-    if(message.content.startsWith(`${prefix}rank`)) {
-    var user = message.mentions.users.first() || message.author
-    var level = db.get(`guild_${message.guild.id}_level_${user.id}`) || 0
-    level = level.toString()
-    let xp = db.get(`guild_${message.guild.id}_xp_${user.id}`) || 0
-    var xpNeeded = level * 500 + 500
-    let every = db
+module.exports = {
+  name: "rank",
+  category: "info",
+  description: "view your rank xp",
+  run: async(bot, message, args) =>{
+
+  let user =
+    message.mentions.users.first() ||
+    bot.users.cache.get(args[0]) ||
+    match(args.join(" ").toLowerCase(), message.guild) ||
+    message.author;
+
+  let level = db.get(`level_${user.id}`) || 0;
+  level = level.toString();
+  let exp = db.get(`xp_${user.id}`) || 0;
+  let neededXP = Math.floor(Math.pow(level / 0.1, 2));
+
+  let every = db
     .all()
-    .filter(i => i.ID.startsWith(`guild_${message.guild.id}_xptotal_`))
-    .sort((a, b) => b.data - a.data)
-    var rank = every.map(x => x.ID).indexOf(`guild_${message.guild.id}_xptotal_${user.id}`) + 1
-    rank = rank.toString()
-    let img = await Canvacord.rank({
-        username: user.username,
-        discrim: user.discriminator,
-        status: user.presence.status,
-        currentXP: xp.toString(),
-        neededXP: xpNeeded.toString(),
-        rank,
-        level,
-        avatarURL: user.displayAvatarURL({ format: "png"}),
-        color: "white"
-    });
-    return message.channel.send(new Discord.MessageAttachment(img, "rank.png"))
-    }
+    .filter(i => i.ID.startsWith("xp_"))
+    .sort((a, b) => b.data - a.data);
+  let rank = every.map(x => x.ID).indexOf(`xp_${user.id}`) + 1;
+  rank = rank.toString();
+  let img = await Canvacord.rank({
+    username: user.username,
+    status: user.presence.status,
+    discrim: user.discriminator,
+    currentXP: exp.toString(),
+    neededXP: neededXP.toString(),
+    rank,
+    level,
+    avatarURL: user.displayAvatarURL({ format: "png" }),
+    color: "white",
+    background: "https://images.unsplash.com/photo-1523821741446-edb2b68bb7a0?ixlib=rb-1.2.1&w=1000&q=80"
+
+  });
+  return message.channel.send(new MessageAttachment(img, "rank.png"));
 
 
-function xp(message) {
-    if (message.content.startsWith(prefix)) return
-    const randomNumber = Math.floor(Math.random() * 10) +15
-    db.add(`guild_${message.guild.id}_xp_${message.author.id}`, randomNumber)
-    db.add(`guild_${message.guild.id}_xptotal_${message.guild.id}`, randomNumber)
-    var level = db.get(`guild_${message.guild.id}_level_${message.author.id}`) || 1
-    var xp = db.get(`guild_${message.guild.id}_xp_${message.author.id}`)
-    var xpNeeded = level * 500
-    if (xpNeeded < xp) {
-        var newLevel = db.get(`guild_${message.guild.id}_level_${message.author.id}`) || 1
-        db.subtract(`guild_${message.guild.id}_xp_${message.author.id}`, xpNeeded)
-		db.add(`guild_${message.guild.id}_level_${message.author.id}`, 1)
-        message.channel.send(`${message.author}, you have leveled up to level ${newLevel}`)}
-    const args = message.content.substring(prefix.length).split(" ")
-    const mentionedMember = message.mentions.members.first() || message.guild.members.cache.get(args[1])  
-    message.channel.send(`${message
-    .author}, You have leveled up to 
-    ${newLevel} Congratulations :tada: !`)
+function match(msg, i) {
+  if (!msg) return undefined;
+  if (!i) return undefined;
+  let user = i.members.cache.find(
+    m =>
+      m.user.username.toLowerCase().startsWith(msg) ||
+      m.user.username.toLowerCase() === msg ||
+      m.user.username.toLowerCase().includes(msg) ||
+      m.displayName.toLowerCase().startsWith(msg) ||
+      m.displayName.toLowerCase() === msg ||
+      m.displayName.toLowerCase().includes(msg)
+  );
+  if (!user) return undefined;
+  return user.user;
 }}}

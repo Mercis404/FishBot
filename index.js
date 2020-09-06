@@ -1,11 +1,7 @@
-
 const Discord = require("discord.js");
 const fs = require("fs");
 const config = require(`./config.json`);
-const message = require("./events/guild/message");
 const prefix = config.prefix;
-const db = require('quick.db')
-const canvacord = require('canvacord')
 const bot = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 bot.prefix = prefix;
 bot.commands = new Discord.Collection();
@@ -13,8 +9,6 @@ bot.categories = fs.readdirSync('./commands/');
 ["command"].forEach(handler => {
   require(`./handlers/${handler}`)(bot);
 });
-
-require('http').createServer((req, res) => res.end('Bot is alive!')).listen(3000),
 
 
 bot.on('ready', () => {
@@ -139,7 +133,30 @@ bot.on('messageReactionRemove', async (reaction, user) => {
   }
 })
 bot.on('message', async message => {
-  require('./events/guild/message')(bot, message)
+	require('./events/guild/message')(bot, message)
 })
+const db = require("quick.db");
+const Canvacord = require('canvacord')
+
+bot.on("message", async (message) => {
+    if (!message.guild || message.author.bot) return;
+    // Handle XP
+    xp(message);
+    
+});
+
+function xp(message) {
+        let xp = db.add(`xp_${message.author.id}`, 1);
+        let level = Math.floor(0.3 * Math.sqrt(xp));
+        let lvl = db.get(`level_${message.author.id}`) || db.set(`level_${message.author.id}`, 1);;
+        if (level > lvl) {
+            let newLevel = db.set(`level_${message.author.id}`, level);
+            message.channel.send(`:tada: ${message.author.toString()}, You just advanced to level ${newLevel}!`);
+        }
+        
+}
+
+
+
 
 bot.login(process.env.TOKEN);
