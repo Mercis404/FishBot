@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const config = require(`./config.json`);
 const prefix = config.prefix;
+const Canvas = require('canvas')
 const bot = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 bot.prefix = prefix;
 bot.commands = new Discord.Collection();
@@ -10,6 +11,7 @@ bot.categories = fs.readdirSync('./commands/');
   require(`./handlers/${handler}`)(bot);
 });
 
+require('http').createServer((req, res) => res.end('Bot is alive!')).listen(3000),
 
 bot.on('ready', () => {
   const guild = bot.guilds.cache.get('739620038125813814')
@@ -73,12 +75,13 @@ bot.on('guildMemberAdd', async member => {
 registerFont('Open_Sans/OpenSans-SemiBold.ttf', { family: 'Open_Sans' });
 	ctx.font = '28px Open_Sans';
 	ctx.fillStyle = '#ffffff';
-	ctx.fillText('Welcome to the server,', canvas.width / 2.5, canvas.height / 3.5);
+	ctx.fillText(`Welcome to the ${member.guild.name},`, canvas.width / 2.5, canvas.height / 3.5);
 
 	// Add an exclamation point here and below
 	ctx.font = applyText(canvas, `${member.displayName}!`);
 	ctx.fillStyle = '#ffffff';
 	ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
+
 
 	ctx.beginPath();
 	ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
@@ -90,7 +93,7 @@ registerFont('Open_Sans/OpenSans-SemiBold.ttf', { family: 'Open_Sans' });
 
 	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
-	channel.send(`Welcome to the server, ${member}!`, attachment);
+	channel.send(`Welcome to the ${member.guild.name}, ${member}!`, attachment);
 });
 
 bot.on("guildMemberRemove", member => {
