@@ -75,13 +75,12 @@ bot.on('guildMemberAdd', async member => {
 registerFont('Open_Sans/OpenSans-SemiBold.ttf', { family: 'Open_Sans' });
 	ctx.font = '28px Open_Sans';
 	ctx.fillStyle = '#ffffff';
-	ctx.fillText(`Welcome to the ${member.guild.name},`, canvas.width / 2.5, canvas.height / 3.5);
+	ctx.fillText(`Welcome to the server,`, canvas.width / 2.5, canvas.height / 3.5);
 
 	// Add an exclamation point here and below
 	ctx.font = applyText(canvas, `${member.displayName}!`);
 	ctx.fillStyle = '#ffffff';
 	ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
-
 
 	ctx.beginPath();
 	ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
@@ -93,12 +92,16 @@ registerFont('Open_Sans/OpenSans-SemiBold.ttf', { family: 'Open_Sans' });
 
 	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
-	channel.send(`Welcome to the ${member.guild.name}, ${member}!`, attachment);
+	channel.send(`Welcome to the **${member.guild.name}** ${member}!`, attachment);
 });
 
 bot.on("guildMemberRemove", member => {
   const welcomeChannel = member.guild.channels.cache.find(channel => channel.name === 'welcome')
-  welcomeChannel.send(`Goodbye! ${member}`)
+  welcomeChannel.send(`Goodbye ${member} !`)
+  
+
+
+
 })
 bot.on("ready", async message => {
   console.log(`${bot.user.username} is now online`);
