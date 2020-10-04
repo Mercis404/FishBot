@@ -105,7 +105,7 @@ bot.on("guildMemberRemove", member => {
 })
 bot.on("ready", async message => {
   console.log(`${bot.user.username} is now online`);
-  await bot.user.setActivity("!help for commands | 9/27/2020-6:30 P.M EST", {
+  await bot.user.setActivity("!help for commands | 10/09/2020", {
     type: 'STREAMING',
     url: 'https://www.twitch.tv/Mercisffnf'
   })
@@ -141,8 +141,9 @@ bot.on('messageReactionRemove', async (reaction, user) => {
 bot.on('message', async message => {
 	require('./events/guild/message')(bot, message)
 })
+const Canvacord = require("canvacord")
 const db = require("quick.db");
-const Canvacord = require('canvacord')
+
 
 bot.on("message", async (message) => {
     if (!message.guild || message.author.bot) return;
