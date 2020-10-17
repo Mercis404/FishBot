@@ -18,6 +18,8 @@ module.exports={
 
     if(!member) return message.reply('They aren\'t in the server');
 
+if(member.hasPermission('ADMINISTRATOR')) return message.reply('You cannot warn that person!');
+
     var reason = args.splice(1).join(' ');
     if(!reason) return message.reply('You need to give a reason!')
 
