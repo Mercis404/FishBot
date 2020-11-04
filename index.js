@@ -105,7 +105,7 @@ bot.on("guildMemberRemove", member => {
 })
 bot.on("ready", async message => {
   console.log(`${bot.user.username} is now online`);
-  await bot.user.setActivity("!help for commands | v2.4.3", {
+  await bot.user.setActivity("!help for commands | 10/09/2020", {
     type: 'STREAMING',
     url: 'https://www.twitch.tv/Mercisffnf'
   })
